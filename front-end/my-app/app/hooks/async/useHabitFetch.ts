@@ -1,9 +1,8 @@
 import { Habit } from "@/app/types/habitType";
-export default async function useHabitFetch(signal: AbortSignal, url: URL, info: RequestInit): Promise<Habit[]> {
+export default async function useHabitFetch(url: URL, info: RequestInit): Promise<Habit[]> {
     const fetchOptions: RequestInit =
     {
         ...info,
-        signal,
         headers: {
             'Content-Type': "application/json"
         }

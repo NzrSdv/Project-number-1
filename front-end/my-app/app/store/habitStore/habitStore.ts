@@ -8,18 +8,18 @@ type State = {
     habit_fetch_error: Boolean | null
 }
 type Action = {
-    fetchHabits: (signal: AbortSignal, url: URL, info: RequestInit) => Promise<Habit[]>;
-    deleteHabit: (signal: AbortSignal, url: URL, info: RequestInit, body: any) => Promise<Habit[]>;
+    fetchHabits: (url: URL, info: RequestInit) => Promise<Habit[]>;
+    deleteHabit: (url: URL, info: RequestInit, body: any) => Promise<Habit[]>;
     addHabits: (habit: Habit) => void;
 }
 export const useHabit = create<State & Action>((set, get) => ({
     habits: [],
     habit_fetch_loading: false,
     habit_fetch_error: false,
-    fetchHabits: async (signal, url, info) => {
+    fetchHabits: async (url, info) => {
         set({ habit_fetch_loading: true, habit_fetch_error: null })
         try {
-            const fetchedHabits = await useHabitFetch(signal, url, info)
+            const fetchedHabits = await useHabitFetch(url, info)
             console.log(fetchedHabits);
             set({ habits: [...fetchedHabits] })
             set({ habit_fetch_loading: false })
@@ -30,10 +30,10 @@ export const useHabit = create<State & Action>((set, get) => ({
         }
         return [];
     },
-    deleteHabit: async (signal, url, info, body) => {
+    deleteHabit: async (url, info, body) => {
         set({ habit_fetch_loading: true, habit_fetch_error: null })
         try {
-            const fetchedHabits = await useHabitFetch(signal, url, info)
+            const fetchedHabits = await useHabitFetch(url, info)
             console.log(fetchedHabits);
             set({ habits: [...get().habits].filter(value => { if (value.habit_id != body.id) return value }) })
             set({ habit_fetch_loading: false })

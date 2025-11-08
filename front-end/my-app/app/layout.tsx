@@ -1,5 +1,7 @@
+import FooterCommonComponent from "./common/footer/FooterCommonComponent";
+import HeaderCommonComponent from "./common/header/HeaderCommonComponent";
 import "./globals.css";
-import { useHabit } from "./store/habitStore/habitStore";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -7,7 +9,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="h-min-100">{children}</body>
+      <body className="min-h-dvh relative pb-50">
+        <HeaderCommonComponent />
+        {children}
+        <FooterCommonComponent />
+      </body>
     </html>
   );
 }

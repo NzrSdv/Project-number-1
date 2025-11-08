@@ -11,7 +11,7 @@ export default function DefaultButton({
   ...rest
 }: Props) {
   return (
-    <button onClick={() => onClickFunction()} {...rest}>
+    <button onClick={() => onClickFunction()} {...rest} >
       {text}
     </button>
   );

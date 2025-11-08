@@ -16,7 +16,7 @@ export default function HabitEntryInput({
 }: Props) {
   return (
     <input
-      className="w-max-full px-10 py-2 rounded-xl text-center outline-none border-solid border-2 border-black"
+      className="w-full pl-3 py-3 rounded-xl placeholder:text-center focus:outline-cyan-800  bg-cyan-950 placeholder:text-white focus:scale-110 duration-150"
       type={habitValueType}
       value={habitValue}
       placeholder={`${habitPlaceHolder}`}

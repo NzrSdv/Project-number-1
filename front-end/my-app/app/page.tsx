@@ -5,13 +5,36 @@ import { useHabit } from "./store/habitStore/habitStore";
 import HabitInputGroup from "./components/groups/HabitInputGroup";
 import { Habit } from "./types/habitType";
 import HabitRenderGroup from "./components/groups/HabitRenderGroup";
+import HeaderCommonComponent from "./common/header/HeaderCommonComponent";
+import DefaultButton from "./UI/buttons/DefaultButton";
 
 export default function Home() {
+  const [createPopup, createPopupFunction] = useState(false);
+  useEffect(() => {
+    if (createPopup) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [createPopup]);
   return (
-    <div className="flex flex-col items-center justify-center gap-4 py-10">
-      <HabitInputGroup />
-      <HabitRenderGroup />
-    </div>
+    <>
+      <div className="flex flex-col items-center justify-center gap-4 py-10">
+        <DefaultButton
+          className="max-width-100 px-10 py-2 rounded-xl hover:scale-110 duration-200 text-white bg-green-700"
+          text={"+ Create habit"}
+          onClickFunction={() => {
+            createPopupFunction(!createPopup);
+          }}
+        />
+        {createPopup && <HabitInputGroup someFunction={createPopupFunction} />}
+        <HabitRenderGroup />
+      </div>
+    </>
   );
 }
 // <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">

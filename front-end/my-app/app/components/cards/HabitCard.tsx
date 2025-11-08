@@ -30,11 +30,8 @@ export default function HabitCard({ habit }: Props) {
         className="max-width-100 px-10 py-2 rounded-xl hover:scale-110 duration-200 bg-red-900 text-white"
         text={"Delete"}
         onClickFunction={() => {
-          const abortController = new AbortController();
-          const signal = abortController.signal;
           const url = new URL("http://localhost:5000/deletebyid");
           deleteHabit(
-            signal,
             url,
             {
               method: "DELETE",
