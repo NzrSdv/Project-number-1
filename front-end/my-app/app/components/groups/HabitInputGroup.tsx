@@ -8,6 +8,7 @@ import DefaultButton from "@/app/UI/buttons/DefaultButton";
 type Props = {};
 
 export default function HabitInputGroup({}: Props) {
+  const habits = useHabit((state) => state.habits);
   const [habitName, habitNameFunction] = useState("");
   const [habitDescription, habitDescriptionFunction] = useState("");
   const [habitFrequency, habitFrequencyFunction] = useState("");
@@ -38,14 +39,13 @@ export default function HabitInputGroup({}: Props) {
       <DefaultButton
         text={"Add new Habit"}
         onClickFunction={() => {
-          const random = Math.ceil(Math.random() * 100);
-          const habitID = random;
+          const lastID = habits.length | 0;
+          const habitID = lastID + 1;
           createHabitFunction({
             habit_id: habitID,
             habit_title: habitName,
             habit_description: habitDescription,
             habit_frequency: habitFrequency,
-            habit_created_At: new Date(),
           });
           habitNameFunction("");
           habitDescriptionFunction("");

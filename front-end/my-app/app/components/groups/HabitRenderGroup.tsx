@@ -36,12 +36,15 @@ export default function HabitRenderGroup({}: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-1">
-      <h2>Your Habits in database</h2>
-      <div className="flex flex-row flex-wrap items-center justify-center gap-4 scroll-auto">
-      {habits?.map((habit, index) => (
-        <HabitCard habit={habit} key={index} />
-      ))}
-      </div>
+      {!habits?.length && <h2>No habits Yet</h2>}
+      {habits?.length > 0 && (<>
+      <h2>Your habit list</h2>
+        <div className="flex flex-row flex-wrap items-center justify-center gap-4 scroll-auto">
+          {habits?.map((habit, index) => (
+            <HabitCard habit={habit} key={index} />
+          ))}
+        </div></>
+      )}
     </div>
   );
 }

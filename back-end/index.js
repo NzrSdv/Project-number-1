@@ -22,13 +22,9 @@ app.get("/habits", async (req, res) => {
 });
 
 app.post("/createhabit", async (req, res) => {
-  const {
-    habit_id,
-    habit_title,
-    habit_description,
-    habit_frequency,
-    habit_created_at,
-  } = req.body;
+  console.log(req.body);
+  const { habit_id, habit_title, habit_description, habit_frequency } =
+    req.body;
   try {
     const result = await pool.query(
       "INSERT INTO habits_information (habit_id, habit_title,habit_description,habit_frequency,habit_created_at) VALUES ($1,$2,$3,$4,$5) RETURNING *",
@@ -37,7 +33,7 @@ app.post("/createhabit", async (req, res) => {
         habit_title,
         habit_description,
         habit_frequency,
-        habit_created_at,
+        new Date().toISOString(),
       ]
     );
     res.json(result.rows[0]);
@@ -58,12 +54,10 @@ app.delete("/deletebyid", async (req, res) => {
     if (result.rowCount == 0) {
       return res.status(404).json({ message: "Item not found" });
     }
-    res
-      .status(200)
-      .json({
-        message: "Item deleted successfully.",
-        deletedItem: result.rows[0],
-      });
+    res.status(200).json({
+      message: "Item deleted successfully.",
+      deletedItem: result.rows[0],
+    });
   } catch (error) {
     console.error("Deleting item error: ", error);
     res.status(500).json({ message: "Internal server error" });
