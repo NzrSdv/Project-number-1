@@ -9,9 +9,10 @@ type State = {
 }
 type Action = {
     fetchHabits: (signal: AbortSignal, url: URL, info: RequestInit) => Promise<Habit[]>;
+    deleteHabit: (signal: AbortSignal, url: URL, info: RequestInit, body: any) => Promise<Habit[]>;
     addHabits: (habit: Habit) => void;
 }
-export const useHabit = create<State & Action>((set) => ({
+export const useHabit = create<State & Action>((set, get) => ({
     habits: [],
     habit_fetch_loading: false,
     habit_fetch_error: false,
@@ -28,6 +29,19 @@ export const useHabit = create<State & Action>((set) => ({
             set({ habit_fetch_error: true, habit_fetch_loading: false })
         }
         return [];
+    },
+    deleteHabit: async (signal, url, info, body) => {
+        set({ habit_fetch_loading: true, habit_fetch_error: null })
+        try {
+            const fetchedHabits = await useHabitFetch(signal, url, info)
+            console.log(fetchedHabits);
+            set({ habits: [...get().habits].filter(value => { if (value.habit_id != body.id) return value }) })
+            set({ habit_fetch_loading: false })
+        } catch (error) {
+            console.error(error)
+            set({ habit_fetch_error: true, habit_fetch_loading: false })
+        }
+        return get().habits;
     },
     addHabits: async (habit: Habit) => {
         set({ habit_fetch_loading: true });

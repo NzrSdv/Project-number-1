@@ -1,6 +1,4 @@
 import { Habit } from "@/app/types/habitType";
-import { Url } from "next/dist/shared/lib/router/router";
-
 export default async function useHabitFetch(signal: AbortSignal, url: URL, info: RequestInit): Promise<Habit[]> {
     const fetchOptions: RequestInit =
     {
