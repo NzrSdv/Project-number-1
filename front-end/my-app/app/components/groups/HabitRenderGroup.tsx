@@ -19,8 +19,10 @@ export default function HabitRenderGroup({}: Props) {
   useEffect(() => {
     const url = new URL("http://localhost:5000/habits");
     const method = "GET";
-    const fetched_data = fetchHabits(url, { method: method });
-  },[]);
+    if (habits.length == 0) {
+      fetchHabits(url, { method: method });
+    }
+  }, []);
   if (habit_fetch_loading) {
     return <p>Loading habits</p>;
   }
@@ -29,18 +31,22 @@ export default function HabitRenderGroup({}: Props) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1">
-      {!habits?.length && <h2>No habits Yet</h2>}
-      {habits?.length > 0 && (
-        <>
-          <h2>Your habit list</h2>
-          <div className="flex flex-row flex-wrap items-center justify-center gap-4 scroll-auto">
-            {habits?.map((habit, index) => (
-              <HabitCard habit={habit} key={index} />
-            ))}
-          </div>
-        </>
-      )}
+    <div className="flex flex-col items-start justify-center gap-1">
+      <div className="min-w-[90dvw] flex flex-col items-center justify-center gap-5 ">
+        {!habits?.length && (
+          <h2 className="text-start text-4xl font-bold mt-40">You have no habits</h2>
+        )}
+        {habits?.length > 0 && (
+          <>
+            <h2 className="text-2xl font-bold">Your habits: </h2>
+            <div className="w-full flex flex-row flex-wrap items-center justify-center gap-4">
+              {habits?.map((habit, index) => (
+                <HabitCard habit={habit} index={index} key={index} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

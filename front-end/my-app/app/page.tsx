@@ -5,8 +5,9 @@ import { useHabit } from "./store/habitStore/habitStore";
 import HabitInputGroup from "./components/groups/HabitInputGroup";
 import { Habit } from "./types/habitType";
 import HabitRenderGroup from "./components/groups/HabitRenderGroup";
-import HeaderCommonComponent from "./common/header/HeaderCommonComponent";
 import DefaultButton from "./UI/buttons/DefaultButton";
+
+import { AnimatePresence } from "motion/react";
 
 export default function Home() {
   const [createPopup, createPopupFunction] = useState(false);
@@ -18,20 +19,24 @@ export default function Home() {
     }
 
     return () => {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     };
   }, [createPopup]);
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-4 py-10">
         <DefaultButton
-          className="max-width-100 px-10 py-2 rounded-xl hover:scale-110 duration-200 text-white bg-green-700"
+          className="max-width-100 px-10 py-3 rounded-xl hover:scale-105 duration-200 text-cyan-950 bg-white"
           text={"+ Create habit"}
           onClickFunction={() => {
             createPopupFunction(!createPopup);
           }}
         />
-        {createPopup && <HabitInputGroup someFunction={createPopupFunction} />}
+        <AnimatePresence initial={false}>
+          {createPopup ? (
+            <HabitInputGroup someFunction={createPopupFunction} />
+          ) : null}
+        </AnimatePresence>
         <HabitRenderGroup />
       </div>
     </>

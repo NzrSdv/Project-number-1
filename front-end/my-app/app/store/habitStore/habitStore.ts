@@ -11,6 +11,7 @@ type Action = {
     fetchHabits: (url: URL, info: RequestInit) => Promise<Habit[]>;
     deleteHabit: (url: URL, info: RequestInit, body: any) => Promise<Habit[]>;
     addHabits: (habit: Habit) => void;
+    getHabitById: (id: number) => Habit;
 }
 export const useHabit = create<State & Action>((set, get) => ({
     habits: [],
@@ -63,5 +64,8 @@ export const useHabit = create<State & Action>((set, get) => ({
         finally {
             set({ habit_fetch_loading: false })
         }
+    },
+    getHabitById: (id) => {
+        return get().habits.find(iterationHabits => iterationHabits.habit_id == id) || get().habits[0];
     }
 }))

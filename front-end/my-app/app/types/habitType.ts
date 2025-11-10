@@ -3,4 +3,5 @@ export type Habit = {
     habit_title: String,
     habit_description: String,
     habit_frequency: String,
+    habit_created_at: String
 }
